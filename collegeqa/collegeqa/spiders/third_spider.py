@@ -12,15 +12,17 @@ class FirstSpider(scrapy.Spider):
     ]
     def __init__ (self):
         chrome_options = Options()
-        # chrome_options.add_argument("--headless")
-        chromepath=which("ch")
-        driver = webdriver.Chrome(executable_path=chromepath,options=chrome_options)
+        options = webdriver.ChromeOptions()
+        options.add_argument('--headless')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        driver = webdriver.Chrome(options=options)
         # driver = webdriver.Chrome(executable_path=chromepath)
         driver.get("https://collegedunia.com/india-colleges/")
         last_height = driver.execute_script("return document.body.scrollHeight")
         flag=0
         start_time=time.time()
-        while ((time.time() - start_time) < 1*60):
+        while ((time.time() - start_time) < 15*60):
             driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
             new_height = driver.execute_script("return document.body.scrollHeight")
             if new_height == last_height:
@@ -61,8 +63,8 @@ class FirstSpider(scrapy.Spider):
                     rating[b]=a
             tmp1=college.css("ul.clg-fee-review").css("li")
             fees={}
-            for a in tmp1: 
-                fees[a.css("span.lr-value::text").get()]=a.css("span.lr-key::text").get()
+            fees[tmp1[0].css("span.lr-value::text").get()]=tmp1[0].css("span.lr-key::text").get()
+            fees[tmp1[1].css("span.lr-value::text").get()]=tmp1[1].css("span.lr-key::text").get()
             yield{
                 "name_loc":name_loc,
                 "city":city,
