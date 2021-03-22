@@ -12,7 +12,7 @@ BOT_NAME = 'demo_downloader'
 SPIDER_MODULES = ['demo_downloader.spiders']
 NEWSPIDER_MODULE = 'demo_downloader.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+# USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
@@ -21,7 +21,7 @@ ITEM_PIPELINES = {
    'demo_downloader.pipelines.JsonPipeline': 300,
    # 'demo_downloader.pipelines.MongoPipeline':500,
 }
-FILES_STORE = '.\scraped_content\\torents'
+FILES_STORE = '.\scraped_content'
 DOWNLOAD_FAIL_ON_DATALOSS = True
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 20

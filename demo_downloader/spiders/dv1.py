@@ -37,8 +37,9 @@ class DvSpider(scrapy.Spider):
             res=driver.page_source            
             res=Selector(text=res)
             for college in res.css("div.thumb"):
+                # print(response.urljoin(college.css("a::attr(href)").extract()[0])
                 yield scrapy.Request(
-                            url=response.urljoin(college.css("a::attr(href)").extract_first()),
+                            url=response.urljoin(college.css("a::attr(href)").extract()[0],
                             callback=self.parse_page,
                             meta={"c_d":college.css("a::attr(href)").extract_first()}
                         )
@@ -50,8 +51,9 @@ class DvSpider(scrapy.Spider):
         response.meta
         for college in response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]"):
             try :
+                print(response.urljoin(college.xpath("./a/@href").extract()[0]))
                 yield scrapy.Request(
-                    url=response.urljoin(college.xpath("./a/@href").extract_first()),
+                    url=response.urljoin(college.xpath("./a/@href").extract()[0]),
                     callback=self.parse_information,
                     meta={"c_d":c_d,}
                     )
@@ -59,7 +61,7 @@ class DvSpider(scrapy.Spider):
             except:
                 print("skiped")
             # time.sleep(1)
-            print("-------------------------no in page crawled:"+str(i))
+            # print("-------------------------no in page crawled:"+str(i))
         # next_page = response.css('a.no-page.next::attr(href)').get()
         # if (next_page is not None):
         #     yield response.follow(next_page, callback=self.parse) 
@@ -72,7 +74,7 @@ class DvSpider(scrapy.Spider):
         elif ("Low" in re.split("\n",a)[7]):
             link=re.split("'",re.split("\n",a)[7])[1]
         # url=re.split("'",re.split("\n",response.xpath("//div[ contains(@id,'video-player-bg') ]/script[4]/text()").extract()[0])[7])[1]
-        
+        print(link)
         #regrex to find the url from the script 
 
         # print("**************************************************************")

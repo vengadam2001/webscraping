@@ -32,7 +32,7 @@ class DemoDownloaderPipeline:
 
 class JsonPipeline(object):
     def __init__(self):
-        self.file = open("./torrents/college123.json", 'wb')
+        self.file = open("./college123.json", 'wb')
         self.exporter = JsonItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
         self.exporter.start_exporting()
 
