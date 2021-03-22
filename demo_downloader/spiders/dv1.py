@@ -23,8 +23,8 @@ class DvSpider(scrapy.Spider):
         chrome_options.add_argument("--disable-extensions")
         # chrome_options.add_argument("--disable-gpu")
         #chrome_options.add_argument("--no-sandbox") # linux only
-        # chrome_options.add_argument("--headless")
-        # chrome_options.add_argument("--window-size=1920,1080")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--window-size=1920,1080")
         # chrome_options.headless = True # also works
         chromepath=which("ch")
         driver = webdriver.Chrome(executable_path=chromepath,options=chrome_options)
@@ -37,9 +37,9 @@ class DvSpider(scrapy.Spider):
             res=driver.page_source            
             res=Selector(text=res)
             for college in res.css("div.thumb"):
-                # print(response.urljoin(college.css("a::attr(href)").extract()[0])
+                print( response.urljoin(college.css("a::attr(href)").extract()[0]) )
                 yield scrapy.Request(
-                            url=response.urljoin(college.css("a::attr(href)").extract()[0],
+                            url=response.urljoin(college.css("a::attr(href)").extract()[0] ),
                             callback=self.parse_page,
                             meta={"c_d":college.css("a::attr(href)").extract_first()}
                         )
@@ -49,7 +49,9 @@ class DvSpider(scrapy.Spider):
         c_d=response.request.meta["c_d"]
         i=0
         response.meta
-        for college in response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]"):
+        # for college in response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]"):
+        college = response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]")[0]
+        if college:
             try :
                 print(response.urljoin(college.xpath("./a/@href").extract()[0]))
                 yield scrapy.Request(
