@@ -15,16 +15,15 @@ from scrapy.exporters import JsonItemExporter
 # from urllib.parse import urlparse
 # from scrapy.exceptions import DropItem
 import scrapy
-# import os
-# from urllib.parse import urlparse
+import os
+from urllib.parse import urlparse
+from scrapy.pipelines.files import FilesPipeline
 
-# from scrapy.pipelines.files import FilesPipeline
+class MyFilesPipeline(FilesPipeline):
 
-# class MyFilesPipeline(FilesPipeline):
-
-#     def file_path(self, request, response=None, info=None, *, item=None):
-#         return 'files/' + os.path.basename(urlparse(request.url).path)
-
+    def file_path(self, request, response=None, info=None, *, item=None):
+        return ( 'files/'+os.path.basename(urlparse(request.url).path)+'.mp4')
+        
 # from scrapy import settings
 class DemoDownloaderPipeline:
     def process_item(self, item, spider):
@@ -32,7 +31,7 @@ class DemoDownloaderPipeline:
 
 class JsonPipeline(object):
     def __init__(self):
-        self.file = open("./college123.json", 'wb')
+        self.file = open("./torrents/college123.json", 'wb')
         self.exporter = JsonItemExporter(self.file, encoding='utf-8', ensure_ascii=False)
         self.exporter.start_exporting()
 

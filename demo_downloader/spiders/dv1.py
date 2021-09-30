@@ -10,7 +10,7 @@ import re
 # from demo_downloader import DemoDownloaderItem
 class DvSpider(scrapy.Spider):
     name = 'dv1'
-    start_urls = ['https://www.xnxx.com']
+    start_urls = ['https://www.youtube.com']
    
     def parse(self,response):
         # chrome_options = Options()
@@ -32,7 +32,7 @@ class DvSpider(scrapy.Spider):
         j=0
         while(j<1):
 
-            driver.get("https://www.xnxx.com/pornstars/"+str(j))
+            driver.get("https://www.youtube.com/stars/"+str(j))
             j+=1
             res=driver.page_source            
             res=Selector(text=res)
@@ -48,20 +48,27 @@ class DvSpider(scrapy.Spider):
     def parse_page(self,response):
         c_d=response.request.meta["c_d"]
         i=0
-        response.meta
-        # for college in response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]"):
-        college = response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]")[0]
-        if college:
-            try :
-                print(response.urljoin(college.xpath("./a/@href").extract()[0]))
-                yield scrapy.Request(
-                    url=response.urljoin(college.xpath("./a/@href").extract()[0]),
-                    callback=self.parse_information,
-                    meta={"c_d":c_d,}
-                    )
-                i+=1
-            except:
-                print("skiped")
+        # response.meta
+        for college in response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]/div/p/a/@href"):
+        # college = response.xpath("//div[contains(@id,'psvideos')] /div/ div[contains(@class,'thumb-block') ]/div/p/a/@href")[0]
+            # print(response.urljoin(college.extract()))
+            yield scrapy.Request(
+                url=response.urljoin(college.extract()),
+                callback=self.parse_information,
+                meta={"c_d":c_d,}
+            )
+            i+=1
+        # if college:
+        #     try :
+        #         print(response.urljoin(college))
+        #         yield scrapy.Request(
+        #             url=response.urljoin(college),
+        #             callback=self.parse_information,
+        #             meta={"c_d":c_d,}
+        #             )
+        #         i+=1
+        #     except:
+        #         print("skiped")
             # time.sleep(1)
             # print("-------------------------no in page crawled:"+str(i))
         # next_page = response.css('a.no-page.next::attr(href)').get()

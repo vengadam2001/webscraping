@@ -12,17 +12,17 @@ BOT_NAME = 'demo_downloader'
 SPIDER_MODULES = ['demo_downloader.spiders']
 NEWSPIDER_MODULE = 'demo_downloader.spiders'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-# USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.198 Safari/537.36'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 ITEM_PIPELINES = {
-   'scrapy.pipelines.files.FilesPipeline': 1,
+   # 'scrapy.pipelines.files.FilesPipeline': 1,
    'demo_downloader.pipelines.JsonPipeline': 300,
    # 'demo_downloader.pipelines.MongoPipeline':500,
 }
 FILES_STORE = '.\scraped_content'
-DOWNLOAD_FAIL_ON_DATALOSS = True
+DOWNLOAD_FAIL_ON_DATALOSS = False
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 20
 # DOWNLOAD_TIMEOUT = 1200
@@ -78,12 +78,12 @@ MONGODB_COLLECTION = "1234"
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = False
 
 # The initial download delay
-AUTOTHROTTLE_START_DELAY = 1
+AUTOTHROTTLE_START_DELAY = 1000
 # The maximum download delay to be set in case of high latencies
-AUTOTHROTTLE_MAX_DELAY = 120
+AUTOTHROTTLE_MAX_DELAY = 10000
 # The average number of requests Scrapy should be sending in paralle l to
 # each remote server
 AUTOTHROTTLE_TARGET_CONCURRENCY = 1

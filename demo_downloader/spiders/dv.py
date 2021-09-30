@@ -9,7 +9,7 @@ from    selenium.webdriver.chrome.options  import Options
 # from demo_downloader import DemoDownloaderItem
 class DvSpider(scrapy.Spider):
     name = 'dv'
-    start_urls = ['https://www.xnxx.com']
+    start_urls = ['https://www.youtube.com']
    
     def parse(self,response):
         # chrome_options = Options()
@@ -31,7 +31,7 @@ class DvSpider(scrapy.Spider):
         j=0
         while(j<1):
 
-            driver.get("https://www.xnxx.com/pornstars/"+str(j))
+            driver.get("https://www.youtube.com/pornstars/"+str(j))
             j+=1
             res=driver.page_source            
             res=Selector(text=res)
@@ -69,8 +69,8 @@ class DvSpider(scrapy.Spider):
         chrome_options = Options()
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--window-size=1920,1080")
         chromepath=which("ch")
         driver = webdriver.Chrome(executable_path=chromepath,options=chrome_options)
         driver.get(response.url)
@@ -80,8 +80,8 @@ class DvSpider(scrapy.Spider):
         print("**************************************************************")
         print(link)
         print("**************************************************************")
-        # yield {
-        #  'file_urls': [link],
-        #  'name': response.css("strong::text").get(),
-        #  'pname':c_d
-        # }   
+        yield {
+         'file_urls': [link],
+         'name': response.css("strong::text").get(),
+         'pname':c_d
+        }   

@@ -8,7 +8,7 @@ from    selenium.webdriver.chrome.options  import Options
 # from scrapy.loader import ItemLoader
 # from demo_downloader import DemoDownloaderItem
 class DvSpider(scrapy.Spider):
-    name = 'dv'
+    name = 'dv2'
     start_urls = ['https://art.asfgwsr.com/dist/#/login']
    
     def parse(self,response):
